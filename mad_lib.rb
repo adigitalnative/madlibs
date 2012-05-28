@@ -15,15 +15,18 @@ class MadLib
   def process(text)
     @blanks = {}
     @split = text.split(/\((\([^)]*\))\)/)
-    count = 0
+    @count = 0
 
     @split.each do |text|
       if text[0] == ?(
-        text = text[1..-2]
-        @blanks[count] = text
-        count = count + 1
+        save_question(text)
       end
     end
+  end
+
+  def save_question(text)
+    @blanks[@count] = text[1..-2]
+    @count = @count + 1
   end
 
   def get_answers
@@ -42,8 +45,7 @@ class MadLib
     count = 0
     @split.each do |text|
       if text[0] == ?(
-        text = answers[count]
-        mad_lib = mad_lib + text
+        mad_lib = mad_lib + answers[count]
         count = count + 1
       else
         mad_lib = mad_lib + text
